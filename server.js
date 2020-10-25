@@ -17,7 +17,7 @@ const app = express();
 
 //OTHER IMPORTS
 const morgan = require("morgan");
-const dogRouter = require("./controllers/dog");
+const outreachRouter = require("./controllers/outreach");
 
 ////////////
 //MIDDLEWARE
@@ -36,7 +36,7 @@ app.get("/", (req, res) => {
 });
 
 // Dog Routes send to dog router
-app.use("/dog", dogRouter);
+app.use("/outreach", outreachRouter);
 
 //LISTENER
 app.listen(PORT, () => {

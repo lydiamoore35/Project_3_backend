@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 
-//DOG SCHEMA
-const dogSchema = new Schema(
+//Outreach SCHEMA
+const outreachSchema = new Schema(
   {
     name: String,
     age: Number,
@@ -10,8 +10,8 @@ const dogSchema = new Schema(
   { timestamps: true }
 );
 
-//DOG MODEL
-const Dog = model("dog", dogSchema);
+//Outreach MODEL
+const Outreach = model("outreach", outreachSchema);
 
 //EXPORT MODEL
-module.exports = Dog;
+module.exports = Outreach;
