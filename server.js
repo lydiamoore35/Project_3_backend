@@ -1,44 +1,45 @@
-///////////////////////////
-// Environmental Variables
-///////////////////////////
-require("dotenv").config();
-const { PORT = 3000, NODE_ENV = "development" } = process.env;
-
-//MONGO CONNECTION
-const mongoose = require("./DB/conn");
-
-//CORS
-const cors = require("cors");
-const corsOptions = require("./configs/cors.js");
-
-//Bringing in Express
-const express = require("express");
+/////////////////
+//Dependencies 
+////////////////
+require('dotenv').config();
+const {PORT, NODE_ENV} = process.env;
+const express = require('express');
 const app = express();
-
-//OTHER IMPORTS
-const morgan = require("morgan");
-const outreachRouter = require("./controllers/outreach");
-
-////////////
-//MIDDLEWARE
-////////////
-NODE_ENV === "production" ? app.use(cors(corsOptions)) : app.use(cors());
-app.use(express.json());
-app.use(morgan("tiny")); //logging
+const mongoose = require('./DB/conn');
+const morgan = require('morgan');
+const cors = require('cors');
+const corsOptions = require('./configs/cors')
+const authRouter = require('./controllers/auth/Outreach');
+const auth = require('./authMiddleware/authMiddleware');
 
 ///////////////
-//Routes and Routers
+//Middleware
 //////////////
+//Ternary Operator to allow us to switch from dev to production
+app.use(NODE_ENV === 'production' ? cors(corsOptions) : cors());
+app.use(express.json());
+app.use(morgan("tiny"));
 
-//Route for testing server is working
-app.get("/", (req, res) => {
-  res.json({ hello: "Hello World!" });
-});
+/////////////
+//Routers
+////////////
+//Auth Router: localhost:3000/auth (ex. localhost:3000/auth/userHomepage)
+app.use('/auth', authRouter);
 
-// Dog Routes send to dog router
-app.use("/outreach", outreachRouter);
+///////////
+//Routes
+//////////
 
-//LISTENER
+//Auth Route: This will be used for any pages that a user needs to be logged in to see
+//If I use auth here then it will require people to sign in before they see the root route
+// app.get('/', auth, (req, res) => {
+//   res.json(req.payload);  
+// })
+
+
+/////////////
+//Listener
+////////////
 app.listen(PORT, () => {
-  console.log(`Your are listening on port ${PORT}`);
-});
+  console.log(`Listening on port ${PORT}.`)
+})
