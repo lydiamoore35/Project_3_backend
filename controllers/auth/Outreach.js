@@ -1,3 +1,5 @@
+//I NEED TO COMPARE THE ROUTES I HAVE HERE TO WHAT OUR ACTUAL ROUTES ARE TO MAKE SURE THEY WORK PROPERLY
+
 //////////////////////////////////
 // DEPENDENCIES
 /////////////////////////////////
@@ -36,23 +38,38 @@ router.get('/login', (req, res) => {
 
 //LOGIN POST REQUEST
 router.post('/login', async (req, res) => {
-    //FIND USER
+    //Find user
     const user = await User.find({username: req.body.username});
-    //CHECK TO SEE IF USER WAS FOUND
+    //Check to see if user was found
     if(user.length > 0) {
-        //COMPARE PASSWORD
+        //Compare password
         const check = await bcrypt.compare(req.body.password, user[0].password);
         if(check) {
-            //SAVE INFO IN SESSION THAT USER IS LOGGED IN AND THEIR USERNAME
+            //Save info that the user is logged in and their username
             req.session.login = true;
             req.session.username = user[0].username;
  ///////////////////I NEED TO GET THE ROUTE FOR THIS REDIRECT///////////////////
             res.redirect('/homepage')
         } else {
-            //REDIRECT TO LOGIN PAGE IF FAILED TO LOGIN
+            //Redirect to login page if attempt failed
             res.render('auth/fail.jsx');
         } 
     } else {
-        //REDIRECT TO LOGIN PAGE IF FAILED ATTEMPT TO LOGIN
+        //Redirect to login page if attempt failed
+        res.render('auth/fail.jsx')
     }
 })
+
+//LOGOUT
+router.get('/logout', (req, res) => {
+    req.session.destroy();
+///////I NEED THE CORRECT ROUTE FOR THIS////////////////////////////    
+    res.redirect('/')
+})
+
+///////////////////////////////////////
+// Export Router
+///////////////////////////////////////
+module.exports = router;
+
+
