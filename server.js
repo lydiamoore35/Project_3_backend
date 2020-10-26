@@ -15,6 +15,7 @@ const auth = require('./authMiddleware/authMiddleware');
 ///////////////
 //Middleware
 //////////////
+
 //Ternary Operator to allow us to switch from dev to production
 app.use(NODE_ENV === 'production' ? cors(corsOptions) : cors());
 app.use(express.json());
@@ -23,8 +24,10 @@ app.use(morgan("tiny"));
 /////////////
 //Routers
 ////////////
+
 //Auth Router: localhost:3000/auth (ex. localhost:3000/auth/userHomepage)
 app.use('/auth', authRouter);
+
 
 ///////////
 //Routes
@@ -35,6 +38,10 @@ app.use('/auth', authRouter);
 // app.get('/', auth, (req, res) => {
 //   res.json(req.payload);  
 // })
+
+app.get('/', (req, res) => {
+  res.json(req.payload);
+})
 
 
 /////////////
