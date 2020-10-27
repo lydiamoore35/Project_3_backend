@@ -3,9 +3,11 @@ const { Schema, model } = require("mongoose");
 //Outreach SCHEMA
 const outreachSchema = new Schema(
   {
-    name: String,
-    age: Number,
-    img: String,
+    title:{type: String ,required: true },
+    cause:{tye: String , required: true},
+    location: {type: String, required: true},
+    startDate: {type: String, required:true},
+    endDate: {type:String, required:true},
   },
   { timestamps: true }
 );
