@@ -16,4 +16,4 @@ const outreachSchema = new Schema(
 const Outreach = model("outreach", outreachSchema);
 
 //EXPORT MODEL
-//module.exports = Outreach;
+module.exports = Outreach;
