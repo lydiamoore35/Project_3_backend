@@ -4,7 +4,7 @@ const {Schema, model} = require('mongoose');
 const authSchema = new Schema (
   {
     username: {type:String, required:true, unique:true},
-    password: {type:String, require:true},
+    password: {type:String, required:true},
     zipCode: {type:Number, required:true}
 },
   {timestamps:true}

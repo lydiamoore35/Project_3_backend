@@ -4,7 +4,7 @@ const { Schema, model } = require("mongoose");
 const outreachSchema = new Schema(
   {
     title:{type: String ,required: true },
-    cause:{tye: String , required: true},
+    cause:{type: String , required: true},
     location: {type: String, required: true},
     startDate: {type: String, required:true},
     endDate: {type:String, required:true},
