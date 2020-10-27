@@ -1,0 +1,5 @@
+.env
+**/node_modules
+env.yaml
+development.yaml
+production.yaml
