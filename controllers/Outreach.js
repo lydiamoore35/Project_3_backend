@@ -8,6 +8,10 @@ router.get("/", async (req, res) => {
 });
 
 //create route
+router.post("/", async (req, res) => {
+  res.json(await Outreach.create(req.body));
+});
+
 
 //update route
 router.put("/:id", async (req, res) => {
