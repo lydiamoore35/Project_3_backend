@@ -25,8 +25,11 @@ app.use(morgan("tiny"));
 //Routers
 ////////////
 
+
 //Auth Router: localhost:3000/auth (ex. localhost:3000/auth/userHomepage)
 app.use('/auth', authRouter);
+const outreachRouter = require("./controllers/outreach");
+
 
 
 ///////////
