@@ -10,7 +10,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const corsOptions = require('./configs/cors')
 const authRouter = require('./controllers/auth/Outreach');
-const outreachRouter = require("./controllers/outreach");
+
 const auth = require('./authMiddleware/authMiddleware');
 const outreachRouter = require("./controllers/Outreach");
 
