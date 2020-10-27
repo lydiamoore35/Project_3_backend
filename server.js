@@ -12,6 +12,7 @@ const corsOptions = require('./configs/cors')
 const authRouter = require('./controllers/auth/Outreach');
 const outreachRouter = require("./controllers/outreach");
 const auth = require('./authMiddleware/authMiddleware');
+const outreachRouter = require("./controllers/Outreach");
 
 ///////////////
 //Middleware
@@ -29,7 +30,9 @@ app.use(morgan("tiny"));
 
 //Auth Router: localhost:3000/auth (ex. localhost:3000/auth/userHomepage)
 app.use('/auth', authRouter);
-app.use('/outreach',outreachRouter)
+
+app.use('/outreach', outreachRouter)
+
 
 
 
