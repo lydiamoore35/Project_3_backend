@@ -1,6 +1,5 @@
 //I need to test the auth routes with our actual routes
-
-const Outreach = require("../models/outreach");
+const Outreach =  require("../models/Outreach.js")
 const { Router } = require("express");
 const router = Router();
 const auth = require('../authMiddleware/authMiddleware')
@@ -18,7 +17,6 @@ router.post("/", auth, async (req, res) => {
 
 //update route: Requires User Login
 router.put("/:id", auth, async (req, res) => {
-
   res.json(await Outreach.findByIdAndUpdate(req.params.id, req.body, { new: true }));
 });
 
