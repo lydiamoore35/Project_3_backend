@@ -1,6 +1,3 @@
-//BC: Current website
-
-
 ////////////////
 //Dependencies
 ///////////////
@@ -13,9 +10,11 @@ const router = Router();
 const {SECRET} = process.env;
 
 ////////////
-//Sign Up
+//Sign Up BC: localhost:3000/signup - Not verified yet
 ///////////
 router.post('/signup', async (req,res) => {
+    console.log('Welcome to the signup page')
+    res.send('Hello from sign up page')
     try {
         //Salt the user's password so it is encrypted 
         req.body.password = await bcrypt.hash(req.body.password, 10);
@@ -23,6 +22,8 @@ router.post('/signup', async (req,res) => {
         const newUser = await User.create(req.body);
         //If everything goes well we get a new user. If not 400 error
         res.status(200).json(newUser);
+        //Redirect the User to the login page
+        res.redirect("/login")
     } catch (error) {
         res.status(400).json({error});
     }
@@ -30,9 +31,11 @@ router.post('/signup', async (req,res) => {
 
 
 ////////////
-//Log In: 
+//Log In: BC: localhost:3000/login - Not verified yet
 ///////////
 router.post('/login', async (req, res) => {
+    console.log('Hello from Log in page')
+    res.send('Hello from login page')
     try{
         const {username, password} = req.body;
         const user = await User.findOne({username});
@@ -42,6 +45,8 @@ router.post('/login', async (req, res) => {
                 //Token assigned to the username
                 const token = await jwt.sign({username}, SECRET);
                 res.status(200).json({token});
+                //Redirect the User to their homepage
+                res.redirect('/auth/userHomepage')
             } else {
                 res.status(400).json({error: "Password does not match."})
             }
