@@ -10,7 +10,7 @@ const router = Router();
 const {SECRET} = process.env;
 
 ////////////
-//Sign Up BC: localhost:3000/signup - Not verified yet
+//Sign Up BC: localhost:4500/signup 
 ///////////
 router.post('/signup', async (req,res) => {
     console.log('Welcome to the signup page')
@@ -31,7 +31,7 @@ router.post('/signup', async (req,res) => {
 
 
 ////////////
-//Log In: BC: localhost:3000/login - Not verified yet
+//Log In: BC: localhost:4500/login
 ///////////
 router.post('/login', async (req, res) => {
     console.log('Hello from Log in page')

@@ -20,12 +20,12 @@ router.get("/", async (req, res) => {
 
 
 //////////////////
-// BC: User Homepage
+// BC: User Homepage BC: localhost:4500/auth/userHomepage - Blocked by auth
 //////////////////
-router.get('/', auth, async (req, res) => {
+router.get('/auth/userHomepage', auth, async (req, res) => {
   try {
     console.log('Hello from User Homepage. You need to be logged in')
-    res.json(await Outreach.findById({}))
+    res.json(await Outreach.find({}))
   } catch(error){
     console.log(error)
   }
