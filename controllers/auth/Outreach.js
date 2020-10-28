@@ -43,7 +43,7 @@ router.post('/login', async (req, res) => {
             const match = await bcrypt.compare(password, user.password);
             if(match) {
                 //Token assigned to the username
-                const token = await jwt.sign({username}, SECRET);
+                const token = await jwt.sign({username, zipCode}, SECRET);
                 res.status(200).json({token});
                 //Redirect the User to their homepage
                 res.redirect('/auth/userHomepage')
