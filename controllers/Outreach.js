@@ -84,18 +84,18 @@ router.get('/login', async (req, res) => {
 
 
 //create route: Requires User Login
-router.post("/", auth, async (req, res) => {
+router.post("/", async (req, res) => {
   res.json(await Outreach.create(req.body));
 });
 
 
 //update route: Requires User Login
-router.put("/:id", auth, async (req, res) => {
+router.put("/:id", async (req, res) => {
   res.json(await Outreach.findByIdAndUpdate(req.params.id, req.body, { new: true }));
 });
 
 //delete route: Requires User Login
-router.delete("/:id", auth, async (req, res) => {
+router.delete("/:id", async (req, res) => {
   res.json(await Outreach.findByIdAndRemove(req.params.id));
 });
 
