@@ -52,6 +52,12 @@ app.get('/', (req, res) => {
 })
 
 
+//Not sure if this goes here or if it goes int Controllers
+app.get('/userHomepage', auth, (req, res) => {
+  res.json(req.payload);
+})
+
+
 /////////////
 //Listener
 ////////////

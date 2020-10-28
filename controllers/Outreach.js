@@ -4,10 +4,20 @@ const { Router } = require("express");
 const router = Router();
 const auth = require('../authMiddleware/authMiddleware')
 
-//index route: Not sure if this will require user login
+//index route
 router.get("/", async (req, res) => {
   res.json(await Outreach.find({}));
 });
+
+
+//////////////////
+// BC: User Homepage
+//////////////////
+router.get('/', auth, async (req, res) => {
+  res.json(await Outreach.findById({}))
+})
+
+
 
 //create route: Requires User Login
 router.post("/", auth, async (req, res) => {
