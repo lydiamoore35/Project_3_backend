@@ -19,10 +19,11 @@ router.get("/", async (req, res) => {
 });
 
 
-//////////////////
+///////////////3///
 // BC: User Homepage BC: localhost:4500/auth/userHomepage - Blocked by auth
 //////////////////
-router.get('/auth/userHomepage',  async (req, res) => {
+
+router.get('/auth/userHomepage', auth,  async (req, res) => {
   try {
     console.log('Hello from User Homepage. You need to be logged in')
     res.json(await Outreach.find({}))
@@ -35,7 +36,7 @@ router.get('/auth/userHomepage',  async (req, res) => {
 /////////////
 //BC: Signup localhost:4500/signup
 /////////////
-router.get('/signup', async (req,res) => {
+router.post('/signup', async (req,res) => {
   console.log('Welcome to the signup page')
   //res.send('Hello from sign up page')
   try {
@@ -56,7 +57,7 @@ router.get('/signup', async (req,res) => {
 ////////////
 //Log In: BC: localhost:4500/login
 ///////////
-router.get('/login', async (req, res) => {
+router.post('/login', async (req, res) => {
   console.log('Hello from Log in page')
   //res.send('Hello from login page')
   try{
@@ -66,7 +67,7 @@ router.get('/login', async (req, res) => {
           const match = await bcrypt.compare(password, user.password);
           if(match) {
               //Token assigned to the username
-              const token = await jwt.sign({username}, SECRET);
+              const token = await jwt.sign({username , zipCode}, SECRET);
               res.status(200).json({token});
               //Redirect the User to their homepage
               res.redirect('/auth/userHomepage')
