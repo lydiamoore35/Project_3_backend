@@ -22,6 +22,7 @@ router.get("/", async (req, res) => {
 ///////////////3///
 // BC: User Homepage BC: localhost:4500/auth/userHomepage - Blocked by auth
 //////////////////
+
 router.get('/auth/userHomepage', auth,  async (req, res) => {
   try {
     console.log('Hello from User Homepage. You need to be logged in')
@@ -37,7 +38,7 @@ router.get('/auth/userHomepage', auth,  async (req, res) => {
 /////////////
 router.post('/signup', async (req,res) => {
   console.log('Welcome to the signup page')
-  res.send('Hello from sign up page')
+  //res.send('Hello from sign up page')
   try {
       //Salt the user's password so it is encrypted 
       req.body.password = await bcrypt.hash(req.body.password, 10);
@@ -58,7 +59,7 @@ router.post('/signup', async (req,res) => {
 ///////////
 router.post('/login', async (req, res) => {
   console.log('Hello from Log in page')
-  res.send('Hello from login page')
+  //res.send('Hello from login page')
   try{
       const {username, password} = req.body;
       const user = await User.findOne({username});
