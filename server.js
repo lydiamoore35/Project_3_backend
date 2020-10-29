@@ -9,10 +9,7 @@ const mongoose = require('./DB/conn');
 const morgan = require('morgan');
 const cors = require('cors');
 const corsOptions = require('./configs/cors')
-//Anyone accessing the User Homepage or making an event needs this
 const authRouter = require('./controllers/auth/Outreach');
-
-//This is the part that checks user authentication with jwt
 const auth = require('./authMiddleware/authMiddleware');
 const outreachRouter = require("./controllers/Outreach");
 
@@ -38,9 +35,9 @@ app.use('/', outreachRouter)
 ///////////
 //Routes
 //////////
-app.get('/', (req, res) => {
-  res.json(req.payload);
-})
+// app.get('/', auth, (req, res) => {
+//   res.json(req.payload);
+// })
 
 
 //Not sure if this goes here or if it goes int Controllers
