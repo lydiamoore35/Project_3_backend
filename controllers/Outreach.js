@@ -15,7 +15,7 @@ const {SECRET} = process.env;
 //index route: BC: localhost:4500   (JSON Data)
 router.get("/", async (req, res) => {
   console.log('Hello Site Landing Page')
-  res.json(await Outreach.find({}));
+  res.json(await Outreach.find({ }));
 });
 
 
