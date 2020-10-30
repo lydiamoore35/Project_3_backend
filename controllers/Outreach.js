@@ -36,7 +36,8 @@ router.get('/auth/userHomepage', auth,  async (req, res) => {
 /////////////
 //BC: Signup localhost:4500/signup
 /////////////
-router.post('/signup', async (req,res) => {
+//THIS HAS TO HAVE THE /AUTH BECAUSE THAT IS WHAT MAKES JWT WORK. If I call auth separately that is what restricts access
+router.post('/auth/signup', async (req,res) => {
   console.log('Welcome to the signup page')
   //res.send('Hello from sign up page')
   try {
@@ -46,8 +47,6 @@ router.post('/signup', async (req,res) => {
       const newUser = await User.create(req.body);
       //If everything goes well we get a new user. If not 400 error
       res.status(200).json(newUser);
-      //Redirect the User to the login page
-      res.redirect("/login")
   } catch (error) {
       res.status(400).json({error});
   }
@@ -57,7 +56,8 @@ router.post('/signup', async (req,res) => {
 ////////////
 //Log In: BC: localhost:4500/login
 ///////////
-router.post('/login', async (req, res) => {
+//THIS HAS TO HAVE THE /AUTH BECAUSE THAT IS WHAT MAKES JWT WORK. If I call auth separately that is what restricts access
+router.post('/auth/login', async (req, res) => {
   console.log('Hello from Log in page')
   //res.send('Hello from login page')
   try{
@@ -69,8 +69,6 @@ router.post('/login', async (req, res) => {
               //Token assigned to the username
               const token = await jwt.sign({username , zipCode}, SECRET);
               res.status(200).json({token});
-              //Redirect the User to their homepage
-              res.redirect('/auth/userHomepage')
           } else {
               res.status(400).json({error: "Password does not match."})
           }

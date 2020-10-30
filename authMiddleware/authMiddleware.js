@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 
 const auth = async (req, res, next) => {
   try {
-    //Check to see if user has proper authorization headers
+    //Check to see if user has proper authorization header: "bearer + <token>"
     if(req.headers.authorization){
       console.log('Hello From Auth Middleware');
       //Authorization header returns "bearer" + tokenString. The .split here is to separate the two into an array. We want the tokenString so we can compare it to our hashed password using our SECRET
