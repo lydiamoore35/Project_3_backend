@@ -30,4 +30,5 @@
 
 ### Improvements for Later
 - search local projects from home page without logging in
-- 
+- search input to search by zip code
+- incorporate Google API
