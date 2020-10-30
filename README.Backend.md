@@ -5,7 +5,7 @@
 
 ### Link:
 
-### Ubuntu is an application that allows users to sign up and log in to thier account to create, view, update, and/or delete community porjects in thier area.
+### Ubuntu is an application that allows users to sign up and log in to thier account to create, view, update, and/or delete community projects in thier area.
 
 ### User Stories 
 - Outreach create route adds your new project
