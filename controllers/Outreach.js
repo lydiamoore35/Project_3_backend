@@ -12,21 +12,23 @@ const {SECRET} = process.env;
 // BC: Frontend Routes: localhost:3000
 
 
-//index route: BC: localhost:4500   (JSON Data)
+//index route: BC: localhost:4500
 router.get("/", async (req, res) => {
-  console.log('Hello Site Landing Page')
-  res.json(await Outreach.find({ }));
+    console.log('Hello Site Landing Page')
+    res.json(await Outreach.find({}))
 });
 
 
-///////////////3///
-// BC: User Homepage BC: localhost:4500/auth/userHomepage - Blocked by auth
+///////////////////
+//User Homepage  localhost:4500/auth/userHomepage 
 //////////////////
 
 router.get('/auth/userHomepage', auth,  async (req, res) => {
   try {
     console.log('Hello from User Homepage. You need to be logged in')
-    res.json(await Outreach.find({}))
+    console.log(`Req.Payload: ${payload}`)
+    const {username} = req.payload
+    res.status(200).json(await Outreach.find({username}))
   } catch(error){
     console.log(error)
   }
@@ -36,7 +38,6 @@ router.get('/auth/userHomepage', auth,  async (req, res) => {
 /////////////
 //BC: Signup localhost:4500/signup
 /////////////
-//THIS HAS TO HAVE THE /AUTH BECAUSE THAT IS WHAT MAKES JWT WORK. If I call auth separately that is what restricts access
 router.post('/auth/signup', async (req,res) => {
   console.log('Welcome to the signup page')
   //res.send('Hello from sign up page')
@@ -56,7 +57,6 @@ router.post('/auth/signup', async (req,res) => {
 ////////////
 //Log In: BC: localhost:4500/login
 ///////////
-//THIS HAS TO HAVE THE /AUTH BECAUSE THAT IS WHAT MAKES JWT WORK. If I call auth separately that is what restricts access
 router.post('/auth/login', async (req, res) => {
   console.log('Hello from Log in page')
   //res.send('Hello from login page')
@@ -81,19 +81,24 @@ router.post('/auth/login', async (req, res) => {
 })
 
 
-
-//create route: Requires User Login
+/////////////
+//CREATE
+////////////
 router.post("/", async (req, res) => {
   res.json(await Outreach.create(req.body));
 });
 
 
-//update route: Requires User Login
+/////////////
+//UPDATE
+////////////
 router.put("/:id", async (req, res) => {
   res.json(await Outreach.findByIdAndUpdate(req.params.id, req.body, { new: true }));
 });
 
-//delete route: Requires User Login
+/////////////
+//DELETE
+////////////
 router.delete("/:id", async (req, res) => {
   res.json(await Outreach.findByIdAndRemove(req.params.id));
 });
