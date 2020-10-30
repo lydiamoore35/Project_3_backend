@@ -20,7 +20,8 @@
     "jsonwebtoken": "^8.5.1",
     "method-override": "^3.0.0",
     "mongoose": "^5.10.7",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "react-alert": "^7.0.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
