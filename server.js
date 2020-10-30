@@ -35,15 +35,9 @@ app.use('/', outreachRouter)
 ///////////
 //Routes
 //////////
-// app.get('/', auth, (req, res) => {
-//   res.json(req.payload);
-// })
-
-
-//Not sure if this goes here or if it goes int Controllers
-// app.get('/auth/userHomepage', auth, (req, res) => {
-//   res.json(req.payload);
-// })
+app.get('/auth/', auth, (req, res) => {
+  res.json(req.payload);
+})
 
 
 /////////////

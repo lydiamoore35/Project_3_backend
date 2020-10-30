@@ -10,22 +10,19 @@ const router = Router();
 const {SECRET} = process.env;
 
 ////////////
-//Sign Up BC: localhost:4500/signup 
+//Sign Up BC: localhost:4500/signup .... PM 4500/auth/signup
+// "password": "$2b$10$kM8VET2RumNWm321EpAWheGp.0h/lruHskmy/veHdYt41JIDcMzMe",
 ///////////
 router.post('/signup', async (req,res) => {
-    console.log('Welcome to the signup page')
     try {
         //Salt the user's password so it is encrypted 
         req.body.password = await bcrypt.hash(req.body.password, 10);
         //Create the new user
         const newUser = await User.create(req.body);
         res.status(200).json(newUser);
-        //Redirect the User to the login page
     } catch (error) {
         res.status(400).json({error});
-        res.redirect('/signup')
     }
-    res.redirect("/login")
 });
 
 
@@ -33,7 +30,6 @@ router.post('/signup', async (req,res) => {
 //Log In: BC: localhost:4500/login
 ///////////
 router.post('/login', async (req, res) => {
-    console.log('Hello from Log in page')
     try{
         const {username, password} = req.body;
         const user = await User.findOne({username});
@@ -41,7 +37,7 @@ router.post('/login', async (req, res) => {
             const match = await bcrypt.compare(password, user.password);
             if(match) {
                 //Token assigned to the username
-                const token = await jwt.sign({username, zipCode}, SECRET);
+                const token = await jwt.sign({username}, SECRET);
                 res.status(200).json({token});
             } else {
                 res.status(400).json({error: "Password does not match."})
@@ -51,10 +47,7 @@ router.post('/login', async (req, res) => {
         }
     } catch(error){
         res.status(400).json({error})
-        res.redirect('/login')
     }
-     //Redirect the User to their homepage
-     res.redirect('/auth/userHomepage')
 })
 
 module.exports = router;
