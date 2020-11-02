@@ -1,6 +1,3 @@
-//BC: Current website
-
-
 ////////////////
 //Dependencies
 ///////////////
@@ -13,7 +10,8 @@ const router = Router();
 const {SECRET} = process.env;
 
 ////////////
-//Sign Up
+//Sign Up BC: localhost:4500/signup .... PM 4500/auth/signup
+// "password": "$2b$10$kM8VET2RumNWm321EpAWheGp.0h/lruHskmy/veHdYt41JIDcMzMe",
 ///////////
 router.post('/signup', async (req,res) => {
     try {
@@ -21,7 +19,6 @@ router.post('/signup', async (req,res) => {
         req.body.password = await bcrypt.hash(req.body.password, 10);
         //Create the new user
         const newUser = await User.create(req.body);
-        //If everything goes well we get a new user. If not 400 error
         res.status(200).json(newUser);
     } catch (error) {
         res.status(400).json({error});
@@ -30,7 +27,7 @@ router.post('/signup', async (req,res) => {
 
 
 ////////////
-//Log In: 
+//Log In: BC: localhost:4500/login
 ///////////
 router.post('/login', async (req, res) => {
     try{

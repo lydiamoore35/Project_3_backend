@@ -1,37 +1,105 @@
-//I need to test the auth routes with our actual routes
-const Outreach =  require("../models/Outreach.js")
+const Outreach = require("../models/outreach.js")
+const User = require("../models/auth");
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const { Router } = require("express");
 const router = Router();
 const auth = require('../authMiddleware/authMiddleware')
+const authRouter = require('./auth/Outreach')
+const {SECRET} = process.env;
 
-//index route
+// BC: Backend Routes: localhost4500
+// BC: Frontend Routes: localhost:3000
+
+
+//index route: BC: localhost:4500
 router.get("/", async (req, res) => {
-  res.json(await Outreach.find({}));
+    console.log('Hello Site Landing Page')
+    res.json(await Outreach.find({}))
 });
 
 
+///////////////////
+//User Homepage  localhost:4500/auth/userHomepage 
 //////////////////
-// BC: User Homepage
-//////////////////
-router.get('/', auth, async (req, res) => {
-  res.json(await Outreach.findById({}))
+
+router.get('/auth/userHomepage', auth,  async (req, res) => {
+  try {
+    console.log('Hello from User Homepage. You need to be logged in')
+    console.log(`Req.Payload: ${payload}`)
+    const {username} = req.payload
+    res.status(200).json(await Outreach.find({username}))
+  } catch(error){
+    console.log(error)
+  }
+  
+})
+
+/////////////
+//BC: Signup localhost:4500/signup
+/////////////
+router.post('/auth/signup', async (req,res) => {
+  console.log('Welcome to the signup page')
+  //res.send('Hello from sign up page')
+  try {
+      //Salt the user's password so it is encrypted 
+      req.body.password = await bcrypt.hash(req.body.password, 10);
+      //Create the new user
+      const newUser = await User.create(req.body);
+      //If everything goes well we get a new user. If not 400 error
+      res.status(200).json(newUser);
+  } catch (error) {
+      res.status(400).json({error});
+  }
+});
+
+
+////////////
+//Log In: BC: localhost:4500/login
+///////////
+router.post('/auth/login', async (req, res) => {
+  console.log('Hello from Log in page')
+  //res.send('Hello from login page')
+  try{
+      const {username, password} = req.body;
+      const user = await User.findOne({username});
+      if(user){
+          const match = await bcrypt.compare(password, user.password);
+          if(match) {
+              //Token assigned to the username
+              const token = await jwt.sign({username , zipCode}, SECRET);
+              res.status(200).json({token});
+          } else {
+              res.status(400).json({error: "Password does not match."})
+          }
+      } else {
+          res.status(400).json({error: "User not found."})
+      }
+  } catch(error){
+      res.status(400).json({error})
+  }
 })
 
 
-
-//create route: Requires User Login
-router.post("/", auth, async (req, res) => {
+/////////////
+//CREATE
+////////////
+router.post("/", async (req, res) => {
   res.json(await Outreach.create(req.body));
 });
 
 
-//update route: Requires User Login
-router.put("/:id", auth, async (req, res) => {
+/////////////
+//UPDATE
+////////////
+router.put("/:id", async (req, res) => {
   res.json(await Outreach.findByIdAndUpdate(req.params.id, req.body, { new: true }));
 });
 
-//delete route: Requires User Login
-router.delete("/:id", auth, async (req, res) => {
+/////////////
+//DELETE
+////////////
+router.delete("/:id", async (req, res) => {
   res.json(await Outreach.findByIdAndRemove(req.params.id));
 });
 

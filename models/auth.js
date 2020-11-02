@@ -5,7 +5,7 @@ const authSchema = new Schema (
   {
     username: {type:String, required:true, unique:true},
     password: {type:String, required:true},
-    zipCode: {type:Number, required:true}
+    zipCode: {type:String}
 },
   {timestamps:true}
 );

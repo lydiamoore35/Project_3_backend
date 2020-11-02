@@ -10,7 +10,6 @@ const morgan = require('morgan');
 const cors = require('cors');
 const corsOptions = require('./configs/cors')
 const authRouter = require('./controllers/auth/Outreach');
-
 const auth = require('./authMiddleware/authMiddleware');
 const outreachRouter = require("./controllers/Outreach");
 
@@ -27,33 +26,16 @@ app.use(morgan("tiny"));
 //Routers
 ////////////
 
-
-//Auth Router: localhost:3000/auth (ex. localhost:3000/auth/userHomepage)
+//Auth Router: localhost:4500/auth (ex. localhost:4500/auth/userHomepage)
 app.use('/auth', authRouter);
 
-app.use('/outreach', outreachRouter)
-
-
-
+app.use('/', outreachRouter)
 
 
 ///////////
 //Routes
 //////////
-
-//Auth Route: This will be used for any pages that a user needs to be logged in to see
-//If I use auth here then it will require people to sign in before they see the root route
-// app.get('/', auth, (req, res) => {
-//   res.json(req.payload);  
-// })
-
-app.get('/', (req, res) => {
-  res.json(req.payload);
-})
-
-
-//Not sure if this goes here or if it goes int Controllers
-app.get('/userHomepage', auth, (req, res) => {
+app.get('/auth/', auth, (req, res) => {
   res.json(req.payload);
 })
 
