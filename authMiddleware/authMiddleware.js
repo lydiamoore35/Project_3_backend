@@ -13,7 +13,7 @@ const auth = async (req, res, next) => {
       //Authorization header returns "bearer" + tokenString. The .split here is to separate the two into an array. We want the tokenString so we can compare it to our hashed password using our SECRET
       const token = req.headers.authorization.split(" ")[1];
       console.log(`Token: ${token}`); 
-      //I believe payload is the returned result of comparing the token to the user's hashed password + SECRET, but I am waiting for a reply from Alex to confirm that
+     
       const payload = await jwt.verify(token, SECRET);
       console.log(`Payload: ${payload}`);
       //If payload checks out then continue on with the code. If it doesn't send the correlating error message

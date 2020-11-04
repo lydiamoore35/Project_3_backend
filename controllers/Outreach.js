@@ -8,8 +8,8 @@ const auth = require('../authMiddleware/authMiddleware')
 const authRouter = require('./auth/Outreach')
 const {SECRET} = process.env;
 
-// BC: Backend Routes: localhost4500
-// BC: Frontend Routes: localhost:3000
+//Backend Routes: localhost4500
+//Frontend Routes: localhost:3000
 
 
 //index route: BC: localhost:4500
@@ -17,7 +17,6 @@ router.get("/", async (req, res) => {
     console.log('Hello Site Landing Page')
     res.json(await Outreach.find({}))
 });
-
 
 ///////////////////
 //User Homepage  localhost:4500/auth/userHomepage 
@@ -35,14 +34,16 @@ router.get('/auth/userHomepage', auth,  async (req, res) => {
   
 })
 
+
 /////////////
-//BC: Signup localhost:4500/signup
+//Signup: localhost:4500/signup
 /////////////
+
 router.post('/auth/signup', async (req,res) => {
   console.log('Welcome to the signup page')
   //res.send('Hello from sign up page')
   try {
-      //Salt the user's password so it is encrypted 
+      //Encrypt user's password
       req.body.password = await bcrypt.hash(req.body.password, 10);
       //Create the new user
       const newUser = await User.create(req.body);
@@ -55,8 +56,9 @@ router.post('/auth/signup', async (req,res) => {
 
 
 ////////////
-//Log In: BC: localhost:4500/login
+//Log In: localhost:4500/login
 ///////////
+
 router.post('/auth/login', async (req, res) => {
   console.log('Hello from Log in page')
   //res.send('Hello from login page')
@@ -84,6 +86,7 @@ router.post('/auth/login', async (req, res) => {
 /////////////
 //CREATE
 ////////////
+
 router.post("/", async (req, res) => {
   res.json(await Outreach.create(req.body));
 });
@@ -92,6 +95,7 @@ router.post("/", async (req, res) => {
 /////////////
 //UPDATE
 ////////////
+
 router.put("/:id", async (req, res) => {
   res.json(await Outreach.findByIdAndUpdate(req.params.id, req.body, { new: true }));
 });
@@ -99,6 +103,7 @@ router.put("/:id", async (req, res) => {
 /////////////
 //DELETE
 ////////////
+
 router.delete("/:id", async (req, res) => {
   res.json(await Outreach.findByIdAndRemove(req.params.id));
 });
